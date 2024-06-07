@@ -1,47 +1,51 @@
 <?php 
 include 'fungsi/koneksi.php'; 
+session_start();
 
+if (isset($_SESSION['login'])) {
+    if ($_SESSION['role'] == 'admin') {
+        header("Location: admin/dashboard.php");
+    } else {
+        header("Location: user/dashboard.php");
+    }
+}
+
+// Mengambil data login
+$messages = "";
 // Mengambil data login
 if (isset($_POST['login'])) {
     $username = $_POST['username'];
-    $password = md5($_POST['password']);
+    $password = $_POST['password'];
 
     // Cek data login
-    $cek = mysqli_query($db, "SELECT * FROM akun WHERE username='$username' AND password='$password'");
-    $countRow = mysqli_num_rows($cek);
-
-    if ($countRow > 0) {
-        // Mengambil role user
-        $takeRole = mysqli_fetch_array($cek);
-        $role = $takeRole['role'];
-
+    $cek = mysqli_query($db, "SELECT * FROM akun WHERE username='$username'");
+    if ($cek && mysqli_num_rows($cek) > 0) {
         $data = mysqli_fetch_assoc($cek);
-        $datRole = $data['role'];
-        $datEmail = $data['email'];
-        $datnomor = $data['nomor']; 
-        
-        $_SESSION['login'] = true;
-        $_SESSION['nomor'] = $datnomor;
-        $_SESSION['username'] = $username;
-        $_SESSION['role'] = $datRole;
-        $_SESSION['email'] = $datEmail;
 
-        // Jika role sebagai admin, maka akan diarahkan ke halaman admin
-        if ($role == 'admin') {
+        if (password_verify($password, $data['password'])) {
+            // Mengambil role user
+            $datUser_id = $data['user_id'];
+            $datRole = $data['role'];
+            $datEmail = $data['email'];
+            
+            $_SESSION['login'] = true;
             $_SESSION['username'] = $username;
-            $_SESSION['role'] = $role;
-            header("Location: dashboard_admin.php");
+            $_SESSION['role'] = $datRole;
+            $_SESSION['email'] = $datEmail;
+
+            // Jika role sebagai admin, maka akan diarahkan ke halaman admin
+            if ($datRole == 'admin') {
+                header("Location: admin/dashboard_admin.php");
+            } else {
+                // Jika role sebagai user, maka akan diarahkan ke halaman user
+                header("Location: user/dashboard_user.php");
+            }
         } else {
-        // Jika role sebagai user, maka akan diarahkan ke halaman user
-            header("Location: dashboard_user.php");
+            $messages .= "<div class='alert-danger'>Username atau Password Salah!</div>";
         }
-
     } else {
-        if ($countRow == 0) {
-            $err = "Username atau Password Salah!";
-        }
+        $messages .= "<div class='alert-danger'>Username atau Password Salah!</div>";
     }
-
 }
 
 
@@ -80,7 +84,7 @@ if (isset($_POST['login'])) {
 
             <div class="register-link">
                 <p>Don't have an account? <a
-                href="#">Register</a></p>  
+                href="fungsi/register.php">Register</a></p>  
             </div>
         </form>
     </div>

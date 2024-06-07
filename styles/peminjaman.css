@@ -1,0 +1,109 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    background: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1, h2 {
+    text-align: center;
+    color: #333;
+}
+
+/* Header and Navigation */
+header {
+    background: #333;
+    color: #fff;
+    padding: 10px 0;
+    text-align: center;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    background: #0070b8;
+    margin: 0;
+}
+
+nav ul li {
+    margin: 0;
+}
+
+nav ul li a {
+    display: block;
+    padding: 10px 20px;
+    text-decoration: none;
+    color: #fff;
+}
+
+nav ul li a:hover,
+nav ul li a.active {
+    background: #005f5f;
+}
+
+/* Form Styles */
+form.borrow {
+    margin: 20px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+form.borrow label {
+    margin-right: 10px;
+}
+
+form.borrow select {
+    padding: 5px;
+    margin-right: 10px;
+}
+
+form.borrow input[type="submit"] {
+    padding: 5px 10px;
+    background: #6295A2;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+form.borrow input[type="submit"]:hover {
+    background: #555;
+}
+
+/* Table Styles */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+table th, table td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: left;
+}
+
+table th {
+    background: #6295A2;
+    color: black;
+}
+
+table tr:nth-child(even) {
+    background: #f4f4f4;
+}
+
+table tr:hover {
+    background: #e2e2e2;
+}
